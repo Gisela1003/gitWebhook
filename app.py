@@ -53,28 +53,28 @@ def processRequest(req):
     if req.get("https://fernanda@0123@www.consistent.com.mx/api/jsonws/alexaskill.entry/add-query/state-id/41107/nombre-estado/Aguascalientes/anio/0").get("action") != "yahooWeatherForecast":
         return {}
     #baseurl = "https://query.yahooapis.com/v1/public/yql?"
-    baseurl = "https://fernanda@0123@www.consistent.com.mx/api/jsonws/alexaskill.entry/add-query/state-id/41107/nombre-estado/Aguascalientes/anio/0"
+    #baseurl = "https://fernanda@0123@www.consistent.com.mx/api/jsonws/alexaskill.entry/add-query/state-id/41107/nombre-estado/Aguascalientes/anio/0"
     #yql_query = makeYqlQuery(req)
     #if yql_query is None:
     #    return {}
     #yql_url = baseurl + urlencode({'q': yql_query}) + "&format=json"
-    yql_url = baseurl
-    result = urlopen(yql_url).read()
-    data = json.loads(result)
+    #yql_url = baseurl
+    #result = urlopen(yql_url).read()
+    #data = json.loads(result)
     #res = makeWebhookResult(data)
     #return res
-    speech = "connect "
+    #speech = "connect "
 
     #print("Response:")
-    print(speech)
+    #print(speech)
 
-    return {
-        "speech": speech,
-        "displayText": speech,
+    #return {
+    #    "speech": speech,
+    #    "displayText": speech,
          #"data": data,
-         "contextOut": [],
-        "source": "apiai-weather-webhook-sample"
-    }
+    #     "contextOut": [],
+    #    "source": "apiai-weather-webhook-sample"
+    #}
 
 
 #def makeYqlQuery(req):
