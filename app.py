@@ -53,16 +53,15 @@ def processRequest(req):
     if req.get("result").get("action") != "yahooWeatherForecast":
         return {}
     baseurl = "https://query.yahooapis.com/v1/public/yql?"
-    #baseurl = "https://fernanda@0123@www.consistent.com.mx/api/jsonws/alexaskill.entry/add-query/state-id/41107/nombre-estado/Aguascalientes/anio/0"
     yql_query = makeYqlQuery(req)
     if yql_query is None:
         return {}
     yql_url = baseurl + urlencode({'q': yql_query}) + "&format=json"
-    #yql_url = baseurl
     result = urlopen(yql_url).read()
     data = json.loads(result)
     res = makeWebhookResult(data)
     return res
+
 
 def makeYqlQuery(req):
     result = req.get("result")
@@ -97,7 +96,7 @@ def makeWebhookResult(data):
     if condition is None:
         return {}
 
-     print(json.dumps(item, indent=4))
+    # print(json.dumps(item, indent=4))
 
     speech = "Today the weather in " + location.get('city') + ": " + condition.get('text') + \
              ", And the temperature is " + condition.get('temp') + " " + units.get('temperature')
@@ -108,8 +107,8 @@ def makeWebhookResult(data):
     return {
         "speech": speech,
         "displayText": speech,
-         "data": data,
-         "contextOut": [],
+        # "data": data,
+        # "contextOut": [],
         "source": "apiai-weather-webhook-sample"
     }
 
@@ -119,4 +118,4 @@ if __name__ == '__main__':
 
     print("Starting app on port %d" % port)
 
-    app.run(debug=False, port=port, host='0.0.0.0')
+app.run(debug=False, port=port, host='0.0.0.0')
