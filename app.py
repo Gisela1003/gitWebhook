@@ -70,19 +70,6 @@ def processRequest(req):
         return {}
     return res
 
-def makeWebhookResultForGetJoke(data):
-    valueString = data.get('value')
-    joke = valueString.get('joke')
-    speechText = joke
-    displayText = joke
-    return {
-        "speech": speechText,
-        "displayText": displayText,
-        # "data": data,
-        # "contextOut": [],
-        "source": "apiai-weather-webhook-sample"
-    }
-    
 def makeYqlQuery(req):
     result = req.get("result")
     parameters = result.get("parameters")
@@ -132,6 +119,18 @@ def makeWebhookResult(data):
         "source": "apiai-weather-webhook-sample"
     }
 
+def makeWebhookResultForGetJoke(data):
+    valueString = data.get('value')
+    joke = valueString.get('joke')
+    speechText = joke
+    displayText = joke
+    return {
+        "speech": speechText,
+        "displayText": displayText,
+        # "data": data,
+        # "contextOut": [],
+        "source": "apiai-weather-webhook-sample"
+    }
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
