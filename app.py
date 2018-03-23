@@ -51,7 +51,6 @@ def webhook():
 
 def processRequest(req):
     if req.get("result").get("action") != "yahooWeatherForecast":
-        return {}
     baseurl = "https://query.yahooapis.com/v1/public/yql?"
 #    baseurl = "https://fernanda@0123@www.consistent.com.mx/api/jsonws/alexaskill.entry/add-query/state-id/41107/nombre-estado/Aguascalientes/anio/0"
     yql_query = makeYqlQuery(req)
@@ -61,8 +60,14 @@ def processRequest(req):
     result = urlopen(yql_url).read()
     data = json.loads(result)
     res = makeWebhookResult(data)
+    elif req.get("result").get("action")=="getjoke":
+        baseurl = "http://api.icndb.com/jokes/random"
+        result = urlopen(baseurl).read()
+        data = json.loads(result)
+        res = makeWebhookResultForGetJoke(data)
+    else:
+        return {}
     return res
-    return{}
 
 
 def makeYqlQuery(req):
@@ -107,6 +112,20 @@ def makeWebhookResult(data):
     return {
         "speech": speech,
         "displayText": speech,
+        # "data": data,
+        # "contextOut": [],
+        "source": "apiai-weather-webhook-sample"
+    }
+
+
+    def makeWebhookResultForGetJoke(data):
+    valueString = data.get('value')
+    joke = valueString.get('joke')
+    speechText = joke
+    displayText = joke
+    return {
+        "speech": speechText,
+        "displayText": displayText,
         # "data": data,
         # "contextOut": [],
         "source": "apiai-weather-webhook-sample"
