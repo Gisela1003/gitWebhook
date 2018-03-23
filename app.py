@@ -1,3 +1,4 @@
+
 # -*- coding:utf8 -*-
 # !/usr/bin/env python
 # Copyright 2017 Google Inc. All Rights Reserved.
@@ -33,7 +34,7 @@ from flask import make_response
 app = Flask(__name__)
 
 
-@app.route('/webhook', methods=['POST'])#
+@app.route('/webhook', methods=['POST'])
 def webhook():
     req = request.get_json(silent=True, force=True)
 
@@ -53,7 +54,6 @@ def processRequest(req):
     if req.get("result").get("action") != "yahooWeatherForecast":
         return {}
     baseurl = "https://query.yahooapis.com/v1/public/yql?"
-#    baseurl = "https://fernanda@0123@www.consistent.com.mx/api/jsonws/alexaskill.entry/add-query/state-id/41107/nombre-estado/Aguascalientes/anio/0"
     yql_query = makeYqlQuery(req)
     if yql_query is None:
         return {}
@@ -61,13 +61,6 @@ def processRequest(req):
     result = urlopen(yql_url).read()
     data = json.loads(result)
     res = makeWebhookResult(data)
-#    elif req.get("result").get("action")=="getjoke":
-#        baseurl = "http://api.icndb.com/jokes/random"
-#        result = urlopen(baseurl).read()
-#        data = json.loads(result)
-#        res = makeWebhookResultForGetJoke(data)
-#    else:
-#        return {}
     return res
 
 
@@ -77,10 +70,12 @@ def makeYqlQuery(req):
     city = parameters.get("geo-city")
     if city is None:
         return None
+
     return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
 
 
 def makeWebhookResult(data):
+    query = data.get('query')
     if query is None:
         return {}
 
@@ -117,20 +112,6 @@ def makeWebhookResult(data):
         # "contextOut": [],
         "source": "apiai-weather-webhook-sample"
     }
-
-
-#def makeWebhookResultForGetJoke(data):
-#    valueString = data.get('value')
-#    joke = valueString.get('joke')
-#    speechText = joke
-#    displayText = joke
-#    return {
-#        "speech": speechText,
-#        "displayText": displayText,
-        # "data": data,
-        # "contextOut": [],
-#        "source": "apiai-weather-webhook-sample"
-#    }
 
 
 if __name__ == '__main__':
