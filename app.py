@@ -83,7 +83,6 @@ def makeWebhookResultForGetJoke(data):
         "source": "apiai-weather-webhook-sample"
     }
     
-
 def makeYqlQuery(req):
     result = req.get("result")
     parameters = result.get("parameters")
